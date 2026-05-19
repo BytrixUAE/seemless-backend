@@ -1,3 +1,16 @@
-node_modules
+# Logs
+logs
+*.log
+
+# Dependency directories
+node_modules/
+
+# dotenv environment variable files
 .env
+.env.*
+!.env.example
+
 package-lock.json
+uploads/user/
+uploads/admin/
+uploads/hobby/

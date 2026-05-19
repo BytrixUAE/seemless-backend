@@ -171,7 +171,7 @@ class UserOTP extends RestModel {
             order: [['createdAt', 'DESC']],
         })
 
-        if (_.isEmpty(record) || (otp != '0000' && otp != record?.toJSON().otp)) return {}
+        if (_.isEmpty(record) || otp != record?.toJSON().otp) return {}
 
         return record.toJSON()
 

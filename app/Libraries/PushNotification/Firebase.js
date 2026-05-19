@@ -7,6 +7,9 @@ const { isJSON } = require("../../Helper");
 
 class Firebase {
     constructor() {
+        if (!constants.SERVICE_ACCOUNT) {
+            throw new Error('Firebase SERVICE_ACCOUNT is not configured in environment variables.');
+        }
         if (!admin.apps.length) {
             admin.initializeApp({
                 credential: admin.credential.cert(constants.SERVICE_ACCOUNT)

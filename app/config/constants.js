@@ -1,3 +1,26 @@
+function parseFirebaseServiceAccount() {
+    const raw = process.env.SERVICE_ACCOUNT || process.env.FIREBASE_SERVICE_ACCOUNT;
+    if (!raw || !String(raw).trim()) {
+        return null;
+    }
+
+    try {
+        const account = JSON.parse(String(raw).trim());
+        if (!account.client_email || !account.private_key) {
+            throw new Error('service account JSON must include client_email and private_key');
+        }
+        if (typeof account.private_key === 'string') {
+            account.private_key = account.private_key.replace(/\\n/g, '\n');
+        }
+        return account;
+    } catch (err) {
+        throw new Error(
+            `Invalid Firebase SERVICE_ACCOUNT in environment: ${err.message}. ` +
+            'Set SERVICE_ACCOUNT to a single-line JSON string (see .env.example).'
+        );
+    }
+}
+
 module.exports = {
     PASSWORD_SALT_ROUND: 6,
     JWT_SECRET: process.env.JWT_SECRET,
@@ -32,8 +55,6 @@ module.exports = {
     USER_UPLOAD_DIRECTORY: 'user',
 
     NOTIFICATION_DRIVER: process.env.NOTIFICATION_DRIVER || "Firebase",
-    SERVICE_ACCOUNT: {
-        "type": "service_account",
-      }      
+    SERVICE_ACCOUNT: parseFirebaseServiceAccount(),
 
 }

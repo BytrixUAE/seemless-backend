@@ -1,13 +1,16 @@
 var admin = require("firebase-admin");
-
-
+const constants = require("../../config/constants");
 
 class Firebase {
     constructor() {
-        admin.initializeApp({
-            credential: admin.credential.cert(constants.SERVICE_ACCOUNT)
-        });
-
+        if (!constants.SERVICE_ACCOUNT) {
+            throw new Error('Firebase SERVICE_ACCOUNT is not configured in environment variables.');
+        }
+        if (!admin.apps.length) {
+            admin.initializeApp({
+                credential: admin.credential.cert(constants.SERVICE_ACCOUNT)
+            });
+        }
     }
 
 

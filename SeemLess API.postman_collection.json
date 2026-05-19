@@ -64,7 +64,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\":\"Kolby_Gutkowski68@yopmail.com\",\r\n    \"otp\":\"0000\",\r\n    \"device_type\":\"web\",\r\n    \"device_token\":\"123\"\r\n}",
+                  "raw": "{\r\n    \"email\":\"Kolby_Gutkowski68@yopmail.com\",\r\n    \"otp\":\"1234\",\r\n    \"device_type\":\"web\",\r\n    \"device_token\":\"123\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"

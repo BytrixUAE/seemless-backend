@@ -360,8 +360,16 @@ class UserRelationshipController extends RestController {
               request.user.name ||
               "Someone";
 
+          const connectedUserIds = await UserRelationship.getConnectedUserIdsAmong(
+              currentUser,
+              users.map(u => u.id)
+          );
+
           let sent = 0;
           for (const u of users) {
+              if (connectedUserIds.has(u.id)) {
+                  continue;
+              }
               await UserRelationship.sendNotification(
                   u.id,
                   NOTIFICATION_TYPES.NEW_ENCOUNTER,

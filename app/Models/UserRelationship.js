@@ -298,6 +298,75 @@ class UserRelationship extends RestModel {
     }
 
     /**
+     * User IDs where both relationship actions are ACCEPTED (connected, status 20).
+     * @param {number} currentUserId
+     * @returns {Promise<number[]>}
+     */
+    static async getConnectedUserIds(currentUserId) {
+        const relationships = await db.user_relationships.findAll({
+            where: {
+                deletedAt: null,
+                user_one_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
+                user_two_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
+                [Op.or]: [
+                    { user_one_id: currentUserId },
+                    { user_two_id: currentUserId },
+                ],
+            },
+            attributes: ['user_one_id', 'user_two_id'],
+            raw: true,
+        });
+
+        return relationships.map(rel =>
+            rel.user_one_id === currentUserId ? rel.user_two_id : rel.user_one_id
+        );
+    }
+
+    /**
+     * Subset of otherUserIds that are already connected with currentUserId.
+     * @param {number} currentUserId
+     * @param {number[]} otherUserIds
+     * @returns {Promise<Set<number>>}
+     */
+    static async getConnectedUserIdsAmong(currentUserId, otherUserIds) {
+        const uniqueIds = [...new Set((otherUserIds || []).filter(id => id && id !== currentUserId))];
+        if (uniqueIds.length === 0) {
+            return new Set();
+        }
+
+        const pairs = uniqueIds.map(otherId => {
+            const { user_one_id, user_two_id } = this.getCanonicalOrder(currentUserId, otherId);
+            return { user_one_id, user_two_id, otherId };
+        });
+
+        const relationships = await db.user_relationships.findAll({
+            where: {
+                deletedAt: null,
+                user_one_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
+                user_two_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
+                [Op.or]: pairs.map(p => ({
+                    user_one_id: p.user_one_id,
+                    user_two_id: p.user_two_id,
+                })),
+            },
+            attributes: ['user_one_id', 'user_two_id'],
+            raw: true,
+        });
+
+        const connectedKeys = new Set(
+            relationships.map(r => `${r.user_one_id}_${r.user_two_id}`)
+        );
+
+        const connected = new Set();
+        for (const p of pairs) {
+            if (connectedKeys.has(`${p.user_one_id}_${p.user_two_id}`)) {
+                connected.add(p.otherId);
+            }
+        }
+        return connected;
+    }
+
+    /**
      * Helper method to get user location, fallback to user's current location if not provided
      * @param {number} userId - User ID
      * @param {string} location - Optional location from request
@@ -862,30 +931,7 @@ class UserRelationship extends RestModel {
                 ...blockedCurrentUser.map(b => b.user_id)
             ];
             
-            // Step 2: Get users who are already friends (both actions are ACCEPTED)
-            const friendRelationships = await db.user_relationships.findAll({
-                where: {
-                    deletedAt: null,
-                    [Op.or]: [
-                        {
-                            user_one_id: currentUser,
-                            user_one_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
-                            user_two_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED
-                        },
-                        {
-                            user_two_id: currentUser,
-                            user_one_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
-                            user_two_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED
-                        }
-                    ]
-                },
-                attributes: ['user_one_id', 'user_two_id'],
-                raw: true
-            });
-            
-            const friendUserIds = friendRelationships.map(rel => {
-                return rel.user_one_id === currentUser ? rel.user_two_id : rel.user_one_id;
-            });
+            const friendUserIds = await UserRelationship.getConnectedUserIds(currentUser);
             
             // Step 3: Get users who are ignored (hidden_until is within 5 minutes from now)
             const now = new Date();
@@ -1088,30 +1134,7 @@ class UserRelationship extends RestModel {
                 ...blockedCurrentUser.map(b => b.user_id)
             ];
             
-            // Step 2: Get users who are already friends (both actions are ACCEPTED)
-            const friendRelationships = await db.user_relationships.findAll({
-                where: {
-                    deletedAt: null,
-                    [Op.or]: [
-                        {
-                            user_one_id: currentUser,
-                            user_one_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
-                            user_two_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED
-                        },
-                        {
-                            user_two_id: currentUser,
-                            user_one_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
-                            user_two_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED
-                        }
-                    ]
-                },
-                attributes: ['user_one_id', 'user_two_id'],
-                raw: true
-            });
-            
-            const friendUserIds = friendRelationships.map(rel => {
-                return rel.user_one_id === currentUser ? rel.user_two_id : rel.user_one_id;
-            });
+            const friendUserIds = await UserRelationship.getConnectedUserIds(currentUser);
             
             // Step 3: Get users who are ignored (hidden_until is within 5 minutes from now)
             const now = new Date();
@@ -1232,9 +1255,14 @@ class UserRelationship extends RestModel {
                 raw: true
             });
 
+            const connectedUserIds = new Set(friendUserIds);
+
             // Send "new encounter" / "someone crossed your path" notification to each matching user (do not return user list)
             const currentUserName = request.user.username || 'Someone';
             for (const u of users) {
+                if (connectedUserIds.has(u.id)) {
+                    continue;
+                }
                 await UserRelationship.sendNotification(
                     u.id,
                     NOTIFICATION_TYPES.NEW_ENCOUNTER,
