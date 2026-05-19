@@ -1,0 +1,5278 @@
+{
+  "info": {
+    "_postman_id": "f99cc007-6c72-47e0-b430-bae3d23419bd",
+    "name": "SeemLess API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50377247",
+    "_collection_link": "https://go.postman.co/collection/50377247-f99cc007-6c72-47e0-b430-bae3d23419bd?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Account",
+          "item": [
+            {
+              "name": "Create User",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields - Personal Information\r\n    \"firstname\": \"{{$randomFirstName}}\",\r\n    \"lastname\": \"{{$randomLastName}}\",\r\n    \"email\": \"{{$randomUserName}}@yopmail.com\",\r\n    \"username\": \"{{$randomUserName}}\",\r\n    \"mobile_no\": \"+1{{$randomPhoneNumber}}\",\r\n    \r\n    // option fields - Profile Details\r\n    // \"dob\": \"{{$randomDatePast}}\",\r\n    // \"star_name\": \"Aries\",\r\n    // \"gender\": 20, //  MALE: 10, FEMALE: 20, OTHER: 30,\r\n    // \"is_visible\": 1,\r\n    \r\n    // Optional fields - Location\r\n    // \"current_location\": \"{{$randomStreetAddress}}\",\r\n    // \"current_longitude\": {{$randomLongitude}},\r\n    // \"current_latitude\": {{$randomLatitude}},\r\n    \r\n    // Required fields - Authentication\r\n    \"password\": \"Test@123\",\r\n    \"confirm_password\": \"Test@123\",\r\n    \r\n    // Device Information\r\n    \"device_type\": \"android\",\r\n    \"device_token\": \"abc123def456ghi789\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Verify OTP ( Register Screen )",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"Kolby_Gutkowski68@yopmail.com\",\r\n    \"otp\":\"0000\",\r\n    \"device_type\":\"web\",\r\n    \"device_token\":\"123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/verify-otp/register",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "verify-otp",
+                    "register"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Verify OTP ( Forgot Password Screen)",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "d022611f-6c8a-4e72-a19b-e55da5b64c64",
+                    "type": "text",
+                    "disabled": true
+                  },
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"user@yopmail.com\",\r\n    \"otp\":\"120924\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/verify-otp/forgot-password",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "verify-otp",
+                    "forgot-password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Parse the JSON response\r",
+                      "var jsonResponse = pm.response.json();\r",
+                      "\r",
+                      "// Extract the data you want from the response\r",
+                      "var token = jsonResponse.data.api_token;\r",
+                      "\r",
+                      "// Set the environment variable\r",
+                      "pm.environment.set(\"api_token\", token);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // \"email\":\"aish@mailinator.com\",\r\n    \"email\":\"testarso@yopmail.com\",\r\n    \"password\":\"Arso@123\", \r\n    \"device_type\":\"ios\",\r\n    \"device_token\":\"cDTfu6bAJED3o4g3sXZhIe:APA91bGWSxQSn1JiUveidKCuD3FxHqsKdLZj0RFRRxfiuGUohpwLowTfQxUrNhzXB9guqsE3nCPjnKeBeyXc9zs8NSPSpbRoyhaoCRuZbsTS-7ypuIObHS0\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/login",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Send OTP",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "d022611f-6c8a-4e72-a19b-e55da5b64c64",
+                    "type": "text",
+                    "disabled": true
+                  },
+                  {
+                    "key": "token",
+                    "value": "68bdbd1c-a197-4d78-9483-3f8f292a42be",
+                    "type": "text",
+                    "disabled": true
+                  },
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"user@yopmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/send-otp/mail",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "send-otp",
+                    "mail"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Set New Password",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFjMlZ5WDJsa0lqbzRMQ0pwWVhRaU9qRTNNamcxTkRRM05EUXNJbVY0Y0NJNk1UY3lPRGszTmpjME5Dd2lhWE56SWpvaWJXbDVjV2RuZFdOdWJXaHBhbmRzWW5kbGIyRnVkV053YkhaNGJXVjZZM0VpTENKemRXSWlPaUp0YVhseFoyZDFZMjV0YUdscWQyeGlkMlZ2WVc1MVkzQnNkbmh0WlhwamNTSXNJbXAwYVNJNkluVnpaWEl0T0NKOS55dFVnSURwV21lOWhxZ1RoMzR2dDViSnFPcjYyc1V2bTl6eWFWclB3VWVJ",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"new_password\":\"test@123\",\r\n    \"confirm_password\":\"test@123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/set-password",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "set-password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Social Login",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "d022611f-6c8a-4e72-a19b-e55da5b64c64",
+                    "type": "text",
+                    "disabled": true
+                  },
+                  {
+                    "key": "token",
+                    "value": "68bdbd1c-a197-4d78-9483-3f8f292a42be",
+                    "type": "text",
+                    "disabled": true
+                  },
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"test23423\",\r\n    \"email\":\"socialuser09@yopmail.com\",\r\n    \"device_type\":\"web\",\r\n    \"device_token\":\"123\",\r\n    \"platform_type\":\"google\",\r\n    \"platform_id\":\"123123123654399vdsss\"\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/social-login",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "social-login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Optional fields - Personal Information\r\n    \"firstname\": \"{{$randomFirstName}}\",\r\n    \"lastname\": \"{{$randomLastName}}\",\r\n    \"username\": \"{{$randomUserName}}\",\r\n    \r\n    // Optional fields - Profile Details\r\n    \"dob\": \"1995-05-15\",\r\n    \"star_name\": \"Taurus\",\r\n    \"gender\": 20, //  MALE: 10, FEMALE: 20, OTHER: 30,\r\n    \"is_visible\": 0,\r\n    \r\n    // Optional fields - Location\r\n    \"current_location\": \"Los Angeles, CA, USA\",\r\n    \"current_longitude\": -118.2437,\r\n    \"current_latitude\": 34.0522,\r\n    \"image_url\": \"user/dffb8d92-e023-444d-a178-9f916537f107.png\",\r\n    // Optional fields - Social Accounts (array)\r\n    // type: must be one of: facebook, instagram, twitter, linkedin, snapchat, tiktok, youtube, other\r\n    // url: must be a valid URL\r\n    \"social_accounts\": [ // FACEBOOK: 'facebook', INSTAGRAM: 'instagram', TWITTER: 'twitter', LINKEDIN: 'linkedin',SNAPCHAT: 'snapchat', TIKTOK: 'tiktok', YOUTUBE: 'youtube',OTHER: 'other',\r\n        {\r\n            \"type\": \"facebook\",\r\n            \"url\": \"https://www.facebook.com/johnsmith\"\r\n        },\r\n        {\r\n            \"type\": \"instagram\",\r\n            \"url\": \"https://www.instagram.com/johnsmith\"\r\n        },\r\n        {\r\n            \"type\": \"twitter\",\r\n            \"url\": \"https://www.twitter.com/johnsmith\"\r\n        }\r\n    ],\r\n    \"radius_unit\": \"meters\",\r\n    \"hobbies\": [1]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Change Password",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"current_password\":\"test@123\",\r\n    \"new_password\":\"Test@123\",\r\n    \"confirm_password\":\"Test@123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/change-password",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "change-password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Account",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}api/user",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Logout",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}api/user/logout",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "logout"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get My Profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}api/user",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get User Profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}api/user/other-profile/3",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "other-profile",
+                    "3"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Users (With Relationship Filters)",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/all-users?my_requested=1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "all-users"
+                  ],
+                  "query": [
+                    {
+                      "key": "my_blocked",
+                      "value": "1",
+                      "description": "Filter: 1 = show only blocked users, 0 or not set = exclude blocked users",
+                      "disabled": true
+                    },
+                    {
+                      "key": "my_friend",
+                      "value": "1",
+                      "description": "Filter: 1 = show only friends (both users have ACCEPTED status)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "my_requested",
+                      "value": "1",
+                      "description": "Filter: 1 = show only users I requested connection with"
+                    },
+                    {
+                      "key": "request_by_me",
+                      "value": "1",
+                      "description": "Filter: 1 = show only users who requested connection with me",
+                      "disabled": true
+                    },
+                    {
+                      "key": "my_ignored",
+                      "value": "0",
+                      "description": "Filter: 1 = show only users I ignored",
+                      "disabled": true
+                    },
+                    {
+                      "key": "ignored_by_me",
+                      "value": "0",
+                      "description": "Filter: 1 = show only users who ignored me",
+                      "disabled": true
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search users by firstname, lastname, name, or email",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page number for pagination",
+                      "disabled": true
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Number of records per page",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Toggle Notification",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/toggle-notification",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "toggle-notification"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Device Token",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"device_type\": \"ios\",\r\n    \"device_token\": \"ABC 12334\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/update-device-token",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "update-device-token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Block a user",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    // \"user_id\": 1,\r\n    \"block_user_id\": 2,\r\n    \"reason\": \"Inappropriate behavior\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-block",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-block"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UnBlock a user",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"block_user_id\": 63\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-unblock",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-unblock"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Pages",
+          "item": [
+            {
+              "name": "Get All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}api/user/page",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "page"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get by Slug",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}api/user/page/privacy-policy",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "page",
+                    "privacy-policy"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Hobbies",
+          "item": [
+            {
+              "name": "Get All Hobbies",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/hobby",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "hobby"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Hobby by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/hobby/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "hobby",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Setting",
+          "item": [
+            {
+              "name": "Get Settings",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}api/user/setting",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "setting"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Upload Attachment",
+          "item": [
+            {
+              "name": "Upload Attachment",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "/Users/muhammadmoshin/Downloads/download.png"
+                    },
+                    {
+                      "key": "path",
+                      "value": "user",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/upload-attachments",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "upload-attachments"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add Attachment",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"url\": \"https://daily-log-content.bizalpha.ca/full_marked_requirements.pdf\",         // string: URL of the attachment\r\n  \"user_id\": 2,                                                 // integer: ID of the user (must exist in users table)\r\n  \"type\": 40,                                                 // integer: Type of attachment (audio: 10, video: 20, image: 30, doc: 40)\r\n//   \"duration\": 120,                                              // integer: Duration in seconds (for audio/video), optional\r\n//   \"thumbnail\": \"http://localhost:3000/user/thumbnail_1745.jpg\", // string: URL of the thumbnail image -optional\r\n//   \"blur_image\": \"http://localhost:3000/user/blur_1745.jpg\",     // string: URL of the blurred image (optional, for images)\r\n  \"instance_type\": 50,                                      // integer: Type of instance (see the documentation)\r\n  \"instance_id\": 12                                            // integer: ID of the instance (e.g., user_id)\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/attachment",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "attachment"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Attachments",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "/C:/Users/faaiz.hassan/Desktop/user-placeholder.jpeg"
+                    },
+                    {
+                      "key": "path",
+                      "value": "user",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/attachment?instance_type=50&instance_id=12",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "attachment"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "5",
+                      "disabled": true
+                    },
+                    {
+                      "key": "type[]",
+                      "value": "40",
+                      "description": "audio: 10, video: 20, image: 30, doc: 40",
+                      "disabled": true
+                    },
+                    {
+                      "key": "type[]",
+                      "value": "30",
+                      "disabled": true
+                    },
+                    {
+                      "key": "instance_type",
+                      "value": "50",
+                      "description": "mention in the documention"
+                    },
+                    {
+                      "key": "instance_id",
+                      "value": "12"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Notifications",
+          "item": [
+            {
+              "name": "Get All",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/notifications",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "notifications"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Unread Count",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/get-unread-count",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "get-unread-count"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Mark All Read",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/mark-all-read",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "mark-all-read"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Mark Single Read",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/mark-single-read/22",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "mark-single-read",
+                    "22"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Subscription Package",
+          "item": [
+            {
+              "name": "Get All Subscription Packages",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/subscription-package",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "subscription-package"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Subscription Package by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/subscription-package/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "subscription-package",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Subscription",
+          "item": [
+            {
+              "name": "Get All Subscriptions",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/subscription",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "subscription"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Subscription by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/subscription/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "subscription",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Stripe Subscription",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"package_id\": 1,\r\n    \"payment_method_id\": \"pm_1T6V1aK36EtZBbagZTS6Niaj\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/subscription/create-stripe-subscription",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "subscription",
+                    "create-stripe-subscription"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Upgrade Subscription",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"package_id\": 2,\r\n    \"subscription_id\": 1\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/subscription/upgrade",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "subscription",
+                    "upgrade"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Cancel Subscription",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"subscription_id\": 31,\r\n    \r\n    // Optional fields\r\n    \"cancel_immediately\": true // true to cancel immediately, false to cancel at end of billing period\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/subscription/cancel",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "subscription",
+                    "cancel"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Subscription Transactions",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/subscription-transactions",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "subscription-transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subscription_id",
+                      "value": "1",
+                      "description": "Filter by subscription ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "status",
+                      "value": "succeeded",
+                      "description": "Filter by status: pending, succeeded, failed, refunded, partially_refunded, disputed",
+                      "disabled": true
+                    },
+                    {
+                      "key": "payment_type",
+                      "value": "initial",
+                      "description": "Filter by payment type: initial, renewal, refund, partial_refund, chargeback",
+                      "disabled": true
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20",
+                      "description": "Number of records per page",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page number",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Payment Method",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields - Card Information\r\n    \"card_number\": \"4242424242424242\",\r\n    \"exp_month\": 12,\r\n    \"exp_year\": 2030,\r\n    \"cvc\": \"123\",\r\n    \"cardholder_name\": \"John Doe\",\r\n    \r\n    // Optional fields\r\n    \"email\": \"john.doe@example.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/payment/create-payment-method",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "payment",
+                    "create-payment-method"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Subscription",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"user_id\": 1,\r\n    \"package_id\": 1,\r\n    \"start_date\": \"2024-01-01T00:00:00Z\",\r\n    \"end_date\": \"2024-02-01T00:00:00Z\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/subscription/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "subscription",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Subscription",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/subscription/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "subscription",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Stripe Webhook",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"evt_1SsN50IvF2ZxoGQFZyCqZVMQ\",\n  \"object\": \"event\",\n  \"api_version\": \"2025-12-15.clover\",\n  \"created\": 1769085221,\n  \"data\": {\n    \"object\": {\n      \"id\": \"sub_1SsN4yIvF2ZxoGQFEQE878qg\",\n      \"object\": \"subscription\",\n      \"application\": null,\n      \"application_fee_percent\": null,\n      \"automatic_tax\": {\n        \"disabled_reason\": null,\n        \"enabled\": false,\n        \"liability\": null\n      },\n      \"billing_cycle_anchor\": 1769085220,\n      \"billing_cycle_anchor_config\": null,\n      \"billing_mode\": {\n        \"flexible\": null,\n        \"type\": \"classic\"\n      },\n      \"billing_thresholds\": null,\n      \"cancel_at\": null,\n      \"cancel_at_period_end\": false,\n      \"canceled_at\": null,\n      \"cancellation_details\": {\n        \"comment\": null,\n        \"feedback\": null,\n        \"reason\": null\n      },\n      \"collection_method\": \"charge_automatically\",\n      \"created\": 1769085220,\n      \"currency\": \"usd\",\n      \"customer\": \"cus_Tq3ArdVDCs6Z9b\",\n      \"customer_account\": null,\n      \"days_until_due\": null,\n      \"default_payment_method\": \"pm_1SsN4wIvF2ZxoGQFpbnvyFF2\",\n      \"default_source\": null,\n      \"default_tax_rates\": [],\n      \"description\": null,\n      \"discounts\": [],\n      \"ended_at\": null,\n      \"invoice_settings\": {\n        \"account_tax_ids\": null,\n        \"issuer\": {\n          \"type\": \"self\"\n        }\n      },\n      \"items\": {\n        \"object\": \"list\",\n        \"data\": [\n          {\n            \"id\": \"si_Tq3BCzuYQ2351a\",\n            \"object\": \"subscription_item\",\n            \"billing_thresholds\": null,\n            \"created\": 1769085221,\n            \"current_period_end\": 1771763620,\n            \"current_period_start\": 1769085220,\n            \"discounts\": [],\n            \"metadata\": {},\n            \"plan\": {\n              \"id\": \"price_1SsLMHIvF2ZxoGQFW6pjegPN\",\n              \"object\": \"plan\",\n              \"active\": true,\n              \"amount\": 9900,\n              \"amount_decimal\": \"9900\",\n              \"billing_scheme\": \"per_unit\",\n              \"created\": 1769078605,\n              \"currency\": \"usd\",\n              \"interval\": \"month\",\n              \"interval_count\": 1,\n              \"livemode\": false,\n              \"metadata\": {},\n              \"meter\": null,\n              \"nickname\": null,\n              \"product\": \"prod_Tq1PXQGeuK361e\",\n              \"tiers_mode\": null,\n              \"transform_usage\": null,\n              \"trial_period_days\": null,\n              \"usage_type\": \"licensed\"\n            },\n            \"price\": {\n              \"id\": \"price_1SsLMHIvF2ZxoGQFW6pjegPN\",\n              \"object\": \"price\",\n              \"active\": true,\n              \"billing_scheme\": \"per_unit\",\n              \"created\": 1769078605,\n              \"currency\": \"usd\",\n              \"custom_unit_amount\": null,\n              \"livemode\": false,\n              \"lookup_key\": null,\n              \"metadata\": {},\n              \"nickname\": null,\n              \"product\": \"prod_Tq1PXQGeuK361e\",\n              \"recurring\": {\n                \"interval\": \"month\",\n                \"interval_count\": 1,\n                \"meter\": null,\n                \"trial_period_days\": null,\n                \"usage_type\": \"licensed\"\n              },\n              \"tax_behavior\": \"unspecified\",\n              \"tiers_mode\": null,\n              \"transform_quantity\": null,\n              \"type\": \"recurring\",\n              \"unit_amount\": 9900,\n              \"unit_amount_decimal\": \"9900\"\n            },\n            \"quantity\": 1,\n            \"subscription\": \"sub_1SsN4yIvF2ZxoGQFEQE878qg\",\n            \"tax_rates\": []\n          }\n        ],\n        \"has_more\": false,\n        \"total_count\": 1,\n        \"url\": \"/v1/subscription_items?subscription=sub_1SsN4yIvF2ZxoGQFEQE878qg\"\n      },\n      \"latest_invoice\": \"in_1SsN4yIvF2ZxoGQFJuZHPPaR\",\n      \"livemode\": false,\n      \"metadata\": {\n        \"package_id\": \"1\",\n        \"user_id\": \"58\"\n      },\n      \"next_pending_invoice_item_invoice\": null,\n      \"on_behalf_of\": null,\n      \"pause_collection\": null,\n      \"payment_settings\": {\n        \"payment_method_options\": null,\n        \"payment_method_types\": null,\n        \"save_default_payment_method\": \"on_subscription\"\n      },\n      \"pending_invoice_item_interval\": null,\n      \"pending_setup_intent\": null,\n      \"pending_update\": null,\n      \"plan\": {\n        \"id\": \"price_1SsLMHIvF2ZxoGQFW6pjegPN\",\n        \"object\": \"plan\",\n        \"active\": true,\n        \"amount\": 9900,\n        \"amount_decimal\": \"9900\",\n        \"billing_scheme\": \"per_unit\",\n        \"created\": 1769078605,\n        \"currency\": \"usd\",\n        \"interval\": \"month\",\n        \"interval_count\": 1,\n        \"livemode\": false,\n        \"metadata\": {},\n        \"meter\": null,\n        \"nickname\": null,\n        \"product\": \"prod_Tq1PXQGeuK361e\",\n        \"tiers_mode\": null,\n        \"transform_usage\": null,\n        \"trial_period_days\": null,\n        \"usage_type\": \"licensed\"\n      },\n      \"quantity\": 1,\n      \"schedule\": null,\n      \"start_date\": 1769085220,\n      \"status\": \"incomplete\",\n      \"test_clock\": null,\n      \"transfer_data\": null,\n      \"trial_end\": null,\n      \"trial_settings\": {\n        \"end_behavior\": {\n          \"missing_payment_method\": \"create_invoice\"\n        }\n      },\n      \"trial_start\": null\n    }\n  },\n  \"livemode\": false,\n  \"pending_webhooks\": 0,\n  \"request\": {\n    \"id\": \"req_XyHBwNrUunjcON\",\n    \"idempotency_key\": \"stripe-node-retry-7bb1ccfb-a8d4-452f-9b9c-b57a7ba9c61f\"\n  },\n  \"type\": \"customer.subscription.created\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}web/stripe-webhook",
+                  "host": [
+                    "{{base_url}}web"
+                  ],
+                  "path": [
+                    "stripe-webhook"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "User Social Account",
+          "item": [
+            {
+              "name": "Get All User Social Accounts",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/user-social-account",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-social-account"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get User Social Account by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/user-social-account/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-social-account",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create User Social Account",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"user_id\": 1,\r\n    \"account_type\": \"facebook\", // facebook, instagram, twitter, linkedin, snapchat, tiktok, youtube, other\r\n    \"url\": \"https://www.facebook.com/johndoe\",\r\n    \"is_active\": 1 // 1 for active, 0 for inactive\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-social-account",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-social-account"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update User Social Account",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"user_id\": 1,\r\n    \"account_type\": \"instagram\", // facebook, instagram, twitter, linkedin, snapchat, tiktok, youtube, other\r\n    \"url\": \"https://www.instagram.com/johndoe\",\r\n    \"is_active\": 1 // 1 for active, 0 for inactive\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-social-account/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-social-account",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete User Social Account",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/user-social-account/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-social-account",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "User Block",
+          "item": [
+            {
+              "name": "Get All User Blocks",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/user-block",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-block"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get User Block by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/user-block/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-block",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update User Block",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"user_id\": 1,\r\n    \"block_user_id\": 2,\r\n    \"reason\": \"Updated reason for blocking\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-block/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-block",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete User Block",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/user-block/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-block",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "User Relationship",
+          "item": [
+            {
+              "name": "Get All User Relationships",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Filtered Relationships (All Filters)",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship"
+                  ],
+                  "query": [
+                    {
+                      "key": "myRequested",
+                      "value": "1",
+                      "description": "Filter: Relationships where you have REQUESTED status",
+                      "disabled": true
+                    },
+                    {
+                      "key": "requesterByme",
+                      "value": "1",
+                      "description": "Filter: Relationships where other user has REQUESTED status (they requested from you)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "myFriend",
+                      "value": "1",
+                      "description": "Filter: Relationships where both users have ACCEPTED status (friends)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "myIgnored",
+                      "value": "1",
+                      "description": "Filter: Relationships where you have IGNORED status",
+                      "disabled": true
+                    },
+                    {
+                      "key": "ignoredByme",
+                      "value": "1",
+                      "description": "Filter: Relationships where other user has IGNORED status (they ignored you)",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Get all relationships with all filters applied. You can enable/disable individual filters by setting their value to 1 or removing them. Multiple filters use OR logic (returns relationships matching ANY of the enabled filters)."
+              },
+              "response": []
+            },
+            {
+              "name": "Get User Relationship by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create/Handle User Relationship (Cross Path)",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    // connect_id: The ID of the other user you want to connect with\r\n    // status: Action to perform (10=requested/cross path, 20=accept, 30=ignore, 40=block)\r\n    \r\n    // Status = 10 (REQUESTED / CROSS PATH)\r\n    // - Creates a new relationship when users cross paths\r\n    // - If relationship already exists, does nothing (idempotent)\r\n    // - If either user blocked the other, action is ignored\r\n    \r\n    // Optional fields - Location\r\n    // If not provided, will use authenticated user's current_location, current_latitude, current_longitude from users table\r\n    \"connect_id\": 125,\r\n    \"status\": 20,\r\n    // \"location\": \"Los Angeles, CA, USA\",\r\n    \"latitude\": 34.0522,\r\n    \"longitude\": -118.2437\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Accept User Relationship",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    // connect_id: The ID of the other user\r\n    // status: 20 = ACCEPT\r\n    \r\n    // Status = 20 (ACCEPTED)\r\n    // - Can be used to directly request a connection with ACCEPTED status\r\n    // - If relationship doesn't exist, creates a new one with your action as ACCEPTED and other user's as REQUESTED\r\n    // - If relationship exists, updates your action to ACCEPTED\r\n    // - If both users accept, sets connected_time to current timestamp (you become friends)\r\n    // - Checks for blocked users before creating/updating\r\n    \r\n    // Optional fields - Location\r\n    // If not provided, will use authenticated user's current_location, current_latitude, current_longitude from users table\r\n    \"connect_id\": 110,\r\n    \"status\": 20,\r\n    \"location\": \"New York, NY, USA\",\r\n    \"latitude\": 40.7128,\r\n    \"longitude\": -74.0060\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Ignore User Relationship",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    // connect_id: The ID of the other user\r\n    // status: 30 = IGNORE\r\n    \r\n    // Status = 30 (IGNORED)\r\n    // - Can be used to directly ignore a user\r\n    // - If relationship doesn't exist, creates a new one with your action as IGNORED and other user's as REQUESTED\r\n    // - If relationship exists, updates your action to IGNORED\r\n    // - Sets hidden_until to 5 minutes from now\r\n    // - User will not see the other user until hidden_until expires\r\n    // - Checks for blocked users before creating/updating\r\n    \r\n    // Optional fields - Location\r\n    // If not provided, will use authenticated user's current_location, current_latitude, current_longitude from users table\r\n    \"connect_id\": 2,\r\n    \"status\": 30,\r\n    \"location\": \"Chicago, IL, USA\",\r\n    \"latitude\": 41.8781,\r\n    \"longitude\": -87.6298\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Block User (via Relationship)",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    // connect_id: The ID of the user to block\r\n    // status: 40 = BLOCK\r\n    \r\n    // Status = 40 (BLOCKED)\r\n    // - Can be used to directly block a user\r\n    // - Creates a block record in user_blocks table\r\n    // - If relationship doesn't exist, creates it first then soft deletes it\r\n    // - If relationship exists, soft deletes it\r\n    // - Users will NEVER see each other again after blocking\r\n    // - Block overrides everything\r\n    \r\n    // Optional fields - Location\r\n    // If not provided, will use authenticated user's current_location, current_latitude, current_longitude from users table\r\n    \"connect_id\": 2,\r\n    \"status\": 40,\r\n    \"location\": \"San Francisco, CA, USA\",\r\n    \"latitude\": 37.7749,\r\n    \"longitude\": -122.4194\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Search Users (Location Based)",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields - Location and Search Parameters\r\n    // location: Address or location name\r\n    // latitude: Latitude coordinate\r\n    // longitude: Longitude coordinate\r\n    // radius: Search radius in meters (e.g., 1000 = 1km)\r\n    \r\n    // Search Logic:\r\n    // - Searches for users within the specified radius\r\n    // - Excludes blocked users (users you blocked or who blocked you)\r\n    // - Excludes users who are already friends (both actions are ACCEPTED)\r\n    // - Excludes users who are ignored (hidden_until within last 5 minutes)\r\n    // - Excludes yourself\r\n    // - Results are sorted by distance (closest first)\r\n    // - Returns up to 10 users\r\n    \r\n    \"location\": \"Los Angeles, CA, USA\",\r\n    \"latitude\": 24.8195,\r\n    \"longitude\": 67.0788,\r\n    \"radius\": 500\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship/search",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship",
+                    "search"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Search Users Offline (Location Based)",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields - Location and Search Parameters\r\n    // location: Address or location name\r\n    // latitude: Latitude coordinate\r\n    // longitude: Longitude coordinate\r\n    // radius: Search radius in meters (e.g., 1000 = 1km)\r\n    \r\n    // Search Logic:\r\n    // - Searches for users within the specified radius\r\n    // - Excludes blocked users (users you blocked or who blocked you)\r\n    // - Excludes users who are already friends (both actions are ACCEPTED)\r\n    // - Excludes users who are ignored (hidden_until within last 5 minutes)\r\n    // - Excludes yourself\r\n    // - Results are sorted by distance (closest first)\r\n    // - Returns up to 10 users\r\n    \r\n    \"location\": \"Los Angeles, CA, USA\",\r\n    \"latitude\": 24.8195,\r\n    \"longitude\": 67.0788,\r\n    \"radius\": 500\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship/search-offline",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship",
+                    "search-offline"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Search Users UUID based",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"uuids\":[\r\n        \"41a96bea-6e28-4292-82cf-301bb7826846\"\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship/search-uuids",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship",
+                    "search-uuids"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update User Relationship",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    // status: Action to perform (10=requested, 20=accept, 30=ignore, 40=block)\r\n    // Note: The relationship ID is taken from the URL parameter (:id)\r\n    // The connect_id is automatically determined from the relationship\r\n    \r\n    // Status values:\r\n    // 10 = REQUESTED (Cross Path) - Creates relationship if not exists\r\n    // 20 = ACCEPTED - Accepts the connection, sets connected_time if both accept\r\n    // 30 = IGNORED - Ignores the connection, hides user for 5 minutes\r\n    // 40 = BLOCKED - Blocks the user, soft deletes relationship\r\n    \r\n    // Optional fields - Location\r\n    // If not provided, will use authenticated user's current_location, current_latitude, current_longitude from users table\r\n    \"status\": 20\r\n    // \"location\": \"Seattle, WA, USA\",\r\n    // \"latitude\": 47.6062,\r\n    // \"longitude\": -122.3321\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete User Relationship",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/user-relationship/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-relationship",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Support Ticket",
+          "item": [
+            {
+              "name": "Get All Support Tickets",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/support-ticket",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "support-ticket"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "",
+                      "description": "Filter by status: 10=PENDING, 20=RESOLVED, 30=CLOSED",
+                      "disabled": true
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search tickets by message content",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page number for pagination",
+                      "disabled": true
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Number of records per page",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Support Ticket by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/support-ticket/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "support-ticket",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Support Ticket",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    // user_id: Automatically set from authenticated user (not required in request)\r\n    \"first_name\": \"John\",\r\n    \"last_name\": \"Doe\",\r\n    \"term\": \"General\",\r\n    \"message\": \"I am experiencing issues with my account login. Please help me resolve this issue.\"\r\n    \r\n    // Optional fields\r\n    // status: Will default to PENDING (10) if not provided\r\n    // resolved_at: Automatically set when status is changed to RESOLVED (20)\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/support-ticket",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "support-ticket"
+                  ]
+                },
+                "description": "Create a new support ticket. The user_id is automatically set from the authenticated user. Status defaults to PENDING (10) if not provided."
+              },
+              "response": []
+            },
+            {
+              "name": "Update Support Ticket",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"status\": 20, // Status values: 10=PENDING, 20=RESOLVED, 30=CLOSED\r\n    \r\n    // Optional fields - All fields are optional for update\r\n    \"first_name\": \"Jane\", // string, min:2, max:100\r\n    \"last_name\": \"Smith\", // string, min:2, max:100\r\n    \"term\": \"Payment Issue\", // string, min:2, max:150\r\n    \"message\": \"Updated message with more details about the issue.\" // string, min:2, max:1000\r\n    \r\n    // Note: When status is set to RESOLVED (20), resolved_at is automatically set to current timestamp\r\n    // Note: user_id cannot be updated (automatically excluded)\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/support-ticket/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "support-ticket",
+                    "1"
+                  ]
+                },
+                "description": "Update a support ticket. Status is required. When status is set to RESOLVED (20), resolved_at is automatically set to the current timestamp. user_id cannot be updated."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Support Ticket",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/support-ticket/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "support-ticket",
+                    "1"
+                  ]
+                },
+                "description": "Soft delete a support ticket (sets deletedAt timestamp). The ticket is not permanently removed from the database."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Report Reason",
+          "item": [
+            {
+              "name": "Get All Report Reasons",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/report-reason",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "report-reason"
+                  ],
+                  "query": [
+                    {
+                      "key": "is_active",
+                      "value": "",
+                      "description": "Filter by active status: 0=inactive, 1=active",
+                      "disabled": true
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search report reasons by reason text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page number for pagination",
+                      "disabled": true
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Number of records per page",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Report Reason by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/user/report-reason/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "report-reason",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "User Report",
+          "item": [
+            {
+              "name": "Report a User",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    // user_id: Automatically set from authenticated user (not required in request)\r\n    \"reported_user_id\": 5, // integer, required: ID of the user being reported (must exist in users table)\r\n    \"reason\": \"Inappropriate behavior\", // string, required, min:2, max:100\r\n    \r\n    // Optional fields\r\n    \"notes\": \"User has been sending inappropriate messages and violating community guidelines.\", // string, min:2, max:1000\r\n    \"attachments\": [ // array, optional: Array of attachment objects\r\n        {\r\n            \"url\": \"https://example.com/evidence1.jpg\", // string, required for each attachment\r\n            \"type\": 30 // integer, optional: Type of attachment (audio: 10, video: 20, image: 30, document: 40)\r\n        },\r\n        {\r\n            \"url\": \"https://example.com/evidence2.jpg\",\r\n            \"type\": 30\r\n        }\r\n    ]\r\n    \r\n    // Note: status is automatically set to PENDING (10) if not provided\r\n    // Note: Attachments are created with instance_type=USER_REPORT (30) and linked to this report\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-report",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-report"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update User Report",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Optional fields - All fields are optional for update\r\n    \"reason\": \"Updated reason for report\", // string, min:2, max:100\r\n    \"notes\": \"Updated notes with more details.\", // string, min:2, max:1000\r\n    \"block_reason\": \"User has been permanently blocked due to repeated violations.\", // string, min:2, max:1000 (required if status=BLOCKED)\r\n    \"status\": 30, // integer, optional: 10=PENDING, 20=SORTED, 30=BLOCKED\r\n    \"attachments\": [ // array, optional: If provided, replaces all existing attachments\r\n        {\r\n            \"url\": \"https://example.com/new_evidence.jpg\",\r\n            \"type\": 30 // integer: audio: 10, video: 20, image: 30, document: 40\r\n        }\r\n    ]\r\n    \r\n    // Note: user_id and reported_user_id cannot be updated (automatically excluded)\r\n    // Note: When status is set to BLOCKED (30), the reported user is automatically blocked with block_reason\r\n    // Note: If attachments are provided, all existing attachments for this report are deleted and replaced\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/user-report/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "user-report",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpiSFZuSWpvaVl6aGlNVE0zWVdZdE9UZG1aaTAwWW1KaExUZzROVGN0TXpFeU16VTJZVE5rWXpjM0lpd2lhV0YwSWpveE56STBNak00TURRMUxDSmxlSEFpT2pFM01qUTROREk0TkRVc0ltbHpjeUk2SWpJMk1EUmtabU14TFdJNE1HWXROREprTmkwNE1EWTRMVFF4WVRnd05UTXlaV0UxTnlJc0luTjFZaUk2SWpJMk1EUmtabU14TFdJNE1HWXROREprTmkwNE1EWTRMVFF4WVRnd05UTXlaV0UxTnlJc0ltcDBhU0k2SW1NNFlqRXpOMkZtTFRrM1ptWXROR0ppWVMwNE9EVTNMVE14TWpNMU5tRXpaR00zTnlKOS54R1k4UHJDeFVnMXozRkg2bURfQl85Y3NxSVRzRE9Dd2pVRHZSaXljakJV",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Account",
+          "item": [
+            {
+              "name": "Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Parse the JSON response\r",
+                      "var jsonResponse = pm.response.json();\r",
+                      "\r",
+                      "// Extract the data you want from the response\r",
+                      "var token = jsonResponse.data.api_token;\r",
+                      "\r",
+                      "// Set the environment variable\r",
+                      "pm.environment.set(\"api_token\", token);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"padmin@yopmail.com\",\r\n    \"password\":\"test@123\",\r\n    \"device_type\":\"web\",\r\n    \"device_token\":\"123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/login",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Forgot Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"admin@yopmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/forgot-password",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "forgot-password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Change Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"current_password\":\"test@123\",\r\n    \"new_password\":\"test@1234\",\r\n    \"confirm_password\":\"test@1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/change-password",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "change-password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "src": "/Users/muhammadmoshin/Downloads/Sample_User_Icon.png"
+                    },
+                    {
+                      "key": "firstname",
+                      "value": "Super",
+                      "type": "text"
+                    },
+                    {
+                      "key": "lastname",
+                      "value": "Admin",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Logout",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"vaa@yopmail.com\",\r\n    \"password\":\"test@1234\",\r\n    \"device_type\":\"web\",\r\n    \"device_token\":\"123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/logout",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "logout"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get My Profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get User Profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/get-user-by-id/15",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "get-user-by-id",
+                    "15"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Users",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/get-all-users?limit=50",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "get-all-users"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search users by firstname, lastname, name, or email",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page number for pagination",
+                      "disabled": true
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50",
+                      "description": "Number of records per page"
+                    },
+                    {
+                      "key": "is_blocked",
+                      "value": "1",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update User",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // // Optional fields - Personal Information\r\n    // \"firstname\": \"John\",\r\n    // \"lastname\": \"Smith\",\r\n    // \"username\": \"johnsmith123\",\r\n    \r\n    // // Optional fields - Profile Details\r\n    // \"dob\": \"1995-05-15\",\r\n    // \"star_name\": \"Taurus\",\r\n    // \"gender\": 20, // MALE: 10, FEMALE: 20, OTHER: 30\r\n    // \"is_visible\": 0,\r\n    \r\n    // // Optional fields - Location\r\n    // \"current_location\": \"Los Angeles, CA, USA\",\r\n    // \"current_longitude\": -118.2437,\r\n    // \"current_latitude\": 34.0522,\r\n    \r\n    // // Optional fields - Social Accounts (array)\r\n    // \"social_accounts\": [\r\n    //     {\r\n    //         \"type\": \"facebook\",\r\n    //         \"url\": \"https://www.facebook.com/johnsmith\"\r\n    //     },\r\n    //     {\r\n    //         \"type\": \"instagram\",\r\n    //         \"url\": \"https://www.instagram.com/johnsmith\"\r\n    //     }\r\n    // ]\r\n    \"is_blocked\": true,\r\n    \"block_reason\": \"any\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/update-user/4",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "update-user",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete User",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/delete-user/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "delete-user",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Send OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields - At least one of email or mobile_no is required\r\n    \"email\": \"padmin@yopmail.com\" // Optional if mobile_no is provided\r\n    // \"mobile_no\": \"+1234567890\" // Optional if email is provided\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/send-otp/mail",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "send-otp",
+                    "mail"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Verify OTP (Forgot Password)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields - At least one of email or mobile_no is required\r\n    \"email\": \"admin@yopmail.com\", // Optional if mobile_no is provided\r\n    \"mobile_no\": \"+1234567890\", // Optional if email is provided\r\n    \"otp\": \"123456\" // Required - OTP code received via email or SMS\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/verify-otp/forgot-password",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "verify-otp",
+                    "forgot-password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Set New Password",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{otp_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"new_password\": \"Test@123\",\r\n    \"confirm_password\": \"Test@123\" // Must match new_password\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/set-password",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "set-password"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Hobbies",
+          "item": [
+            {
+              "name": "Get All Hobbies",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/hobby",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "hobby"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Hobby by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/hobby/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "hobby",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Hobby",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Validation: title required|string|unique:hobbies,title\r\n    \"title\": \"Reading\",\r\n    \r\n    // Validation: icon_url required|url\r\n    \"icon_url\": \"https://example.com/icons/reading.png\"\r\n    \r\n    // Validation: description optional string\r\n    // \"description\": \"Books, articles, and long-form content\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/hobby",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "hobby"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Hobby",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Validation: title optional|string|unique:hobbies,title,id,<id>\r\n    \"title\": \"Reading & Writing\",\r\n    \r\n    // Validation: icon_url optional|url\r\n    \"icon_url\": \"https://example.com/icons/reading-writing.png\",\r\n    \r\n    // Validation: description optional string\r\n    \"description\": \"Books, articles, and writing\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/hobby/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "hobby",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Hobby",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/hobby/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "hobby",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Dashboard",
+          "item": [
+            {
+              "name": "Get Dashboard Stats",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/dashboard",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "dashboard"
+                  ]
+                },
+                "description": "Get dashboard statistics including total users, total active subscriptions, and user growth data for the last 6 weeks."
+              },
+              "response": []
+            },
+            {
+              "name": "Get Dashboard Stats Graph",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/dashboard/graph",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "dashboard",
+                    "graph"
+                  ]
+                },
+                "description": "Get dashboard statistics including total users, total active subscriptions, and user growth data for the last 6 weeks."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Notifications",
+          "item": [
+            {
+              "name": "Send Push Notification",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"title\": \"Important Announcement\", // string, required: Notification title\r\n    \"message\": \"We have an important update for you. Please check it out!\" // string, required: Notification message\r\n    \r\n    // Optional fields\r\n    // \"image_url\": \"https://example.com/notification-image.jpg\", // string, optional: URL of the notification image\r\n    // \"user_ids\": [1, 2, 3], // array, optional: Array of user IDs to send notification to. If not provided or empty, sends to all users\r\n    // \"type\": \"admin_broadcast\", // string, optional: Notification type (defaults to \"admin_broadcast\")\r\n    // \"payload\": { // object, optional: Custom payload data\r\n    //     \"custom_key\": \"custom_value\",\r\n    //     \"action\": \"open_screen\",\r\n    //     \"screen_id\": 123\r\n    // }\r\n    \r\n    // Note: Notification will only be sent to users who:\r\n    // - Have push_notification enabled (push_notification = 1)\r\n    // - Have valid device tokens\r\n    // - Are not blocked (is_blocked = false)\r\n    // - Are activated (is_activated = true)\r\n    // - Are not deleted (deletedAt = null)\r\n    // \r\n    // Response includes:\r\n    // - sent_count: Number of notifications successfully sent\r\n    // - failed_count: Number of notifications that failed\r\n    // - total_users: Total number of unique users found\r\n    // - errors: Array of errors (if any)\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/send-push-notification",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "send-push-notification"
+                  ]
+                },
+                "description": "Send push notifications to users. Can send to all users or specific users by providing user_ids array. Notifications are automatically sent via Firebase push notifications to users with valid device tokens and push notifications enabled."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "App Updates",
+          "item": [
+            {
+              "name": "Get App Update",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/app-updates",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "app-updates"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create App Update",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"android_version\": \"1.0.1\",\r\n    \"ios_version\": \"1.0.1\",\r\n    \"force_update\": true // true to force update, false for optional update\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/app-updates",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "app-updates"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Upload Attachments",
+          "item": [
+            {
+              "name": "Upload Attachment",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "description": "File to upload",
+                      "src": "/Users/muhammadmoshin/Downloads/ho_art.png"
+                    },
+                    {
+                      "key": "path",
+                      "value": "hobby",
+                      "type": "text",
+                      "description": "Destination path for the uploaded file"
+                    },
+                    {
+                      "key": "blur",
+                      "value": "0",
+                      "type": "text",
+                      "description": "Set to 1 to create blurred version of images",
+                      "disabled": true
+                    },
+                    {
+                      "key": "blur_amount",
+                      "value": "10",
+                      "type": "text",
+                      "description": "Blur amount (1-20), only used if blur=1",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/upload-attachments",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "upload-attachments"
+                  ],
+                  "query": [
+                    {
+                      "key": "blur",
+                      "value": "0",
+                      "description": "Set to 1 to create blurred version of images",
+                      "disabled": true
+                    },
+                    {
+                      "key": "blur_amount",
+                      "value": "10",
+                      "description": "Blur amount (1-20), only used if blur=1",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add Attachment",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"url\": \"https://daily-log-content.bizalpha.ca/full_marked_requirements.pdf\",         // string: URL of the attachment\r\n  \"user_id\": 2,                                                 // integer: ID of the user (must exist in users table)\r\n  \"type\": 40,                                                 // integer: Type of attachment (audio: 10, video: 20, image: 30, doc: 40)\r\n//   \"duration\": 120,                                              // integer: Duration in seconds (for audio/video), optional\r\n//   \"thumbnail\": \"http://localhost:3000/user/thumbnail_1745.jpg\", // string: URL of the thumbnail image -optional\r\n//   \"blur_image\": \"http://localhost:3000/user/blur_1745.jpg\",     // string: URL of the blurred image (optional, for images)\r\n  \"instance_type\": 50,                                      // integer: Type of instance (see the documentation)\r\n  \"instance_id\": 12                                            // integer: ID of the instance (e.g., user_id)\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/attachment",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "attachment"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Attachments",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "/C:/Users/faaiz.hassan/Desktop/user-placeholder.jpeg"
+                    },
+                    {
+                      "key": "path",
+                      "value": "user",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}api/user/attachment?instance_type=50&instance_id=12",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "user",
+                    "attachment"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "5",
+                      "disabled": true
+                    },
+                    {
+                      "key": "type[]",
+                      "value": "40",
+                      "description": "audio: 10, video: 20, image: 30, doc: 40",
+                      "disabled": true
+                    },
+                    {
+                      "key": "type[]",
+                      "value": "30",
+                      "disabled": true
+                    },
+                    {
+                      "key": "instance_type",
+                      "value": "50",
+                      "description": "mention in the documention"
+                    },
+                    {
+                      "key": "instance_id",
+                      "value": "12"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Lookup",
+          "item": [
+            {
+              "name": "Get All Lookups",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}api/admin/lookup",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "lookup"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add Data In Lookups",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\":\"test\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/lookup/:id",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "lookup",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "ddd46319-9163-4dd2-ae60-557e6784e770"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Pages",
+          "item": [
+            {
+              "name": "Get Pages",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/page",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "page"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Single Page",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/page/2",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "page",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Single Page by slug",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/page-slug/terms-conditions",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "page-slug",
+                    "terms-conditions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Page",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"Terms And Conditions\",\r\n    \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/page/4",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "page",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Subscription Package",
+          "item": [
+            {
+              "name": "Get All Subscription Packages",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/subscription-package",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "subscription-package"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Subscription Package by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/subscription-package/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "subscription-package",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Subscription Package",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"name\": \"Premium Monthly\",\r\n    \"description\": \"Premium subscription package with full features\",\r\n    \"price\": 29.99,\r\n    \"duration_days\": 30,\r\n    \"type\": \"monthly\", // weekly, monthly, yearly\r\n    \"stripe_price_id\": \"price_1234567890\",\r\n    \"stripe_product_id\": \"prod_1234567890\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/subscription-package",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "subscription-package"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Subscription Package",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"name\": \"Premium Monthly Updated\",\r\n    \"description\": \"Updated premium subscription package\",\r\n    \"price\": 39.99,\r\n    \"duration_days\": 30,\r\n    \"type\": \"monthly\", // weekly, monthly, yearly\r\n    \"stripe_price_id\": \"price_1234567890\",\r\n    \"stripe_product_id\": \"prod_1234567890\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/subscription-package/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "subscription-package",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Subscription Package",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/subscription-package/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "subscription-package",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Subscription",
+          "item": [
+            {
+              "name": "Get All Subscriptions",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/subscription",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "subscription"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Subscription Stats",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/subscription-stats",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "subscription-stats"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "",
+                      "description": "Filter start date (ISO format, e.g., 2024-01-01)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "",
+                      "description": "Filter end date (ISO format, e.g., 2024-12-31)",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Subscription by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/subscription/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "subscription",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Subscription",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/subscription/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "subscription",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Subscription Transactions",
+          "item": [
+            {
+              "name": "Get All Subscription Transactions",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/subscription-transactions",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "subscription-transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subscription_id",
+                      "value": "",
+                      "description": "Filter by subscription ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "status",
+                      "value": "",
+                      "description": "Filter by status: pending, succeeded, failed, refunded, partially_refunded, disputed",
+                      "disabled": true
+                    },
+                    {
+                      "key": "payment_type",
+                      "value": "",
+                      "description": "Filter by payment type: initial, renewal, refund, partial_refund, chargeback",
+                      "disabled": true
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search transactions",
+                      "disabled": true
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20",
+                      "description": "Number of records per page",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page number",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Setting",
+          "item": [
+            {
+              "name": "Get Settings",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/setting",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "setting"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Settings",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Example fields (adjust based on your settings model)\r\n    \"trail_days\": 7,\r\n    \"see_radius\": 5000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/setting/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "setting",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Support Ticket",
+          "item": [
+            {
+              "name": "Get All Support Tickets",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/support-ticket?status=10&search=&page=1&limit=10",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "support-ticket"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "10",
+                      "description": "Filter by status: 10=PENDING, 20=RESOLVED, 30=CLOSED"
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search tickets by message content"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page number for pagination"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Number of records per page"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Support Ticket by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/support-ticket/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "support-ticket",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Support Ticket",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    // user_id: Automatically set from authenticated admin user (not required in request)\r\n    \"first_name\": \"Admin\",\r\n    \"last_name\": \"User\",\r\n    \"term\": \"Technical Issue\",\r\n    \"message\": \"I need help with a technical issue. Please assist.\"\r\n    \r\n    // Optional fields\r\n    // status: Will default to PENDING (10) if not provided\r\n    // resolved_at: Automatically set when status is changed to RESOLVED (20)\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/support-ticket",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "support-ticket"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Support Ticket",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"status\": 20, // Status values: 10=PENDING, 20=RESOLVED, 30=CLOSED\r\n    \r\n    // Optional fields - All fields are optional for update\r\n    \"first_name\": \"Admin\", // string, min:2, max:100\r\n    \"last_name\": \"Updated\", // string, min:2, max:100\r\n    \"term\": \"Resolved Issue\", // string, min:2, max:150\r\n    \"message\": \"Updated message with resolution details.\" // string, min:2, max:1000\r\n    \r\n    // Note: When status is set to RESOLVED (20), resolved_at is automatically set to current timestamp\r\n    // Note: user_id cannot be updated (automatically excluded)\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/support-ticket/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "support-ticket",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Support Ticket",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/support-ticket/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "support-ticket",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Report Reason",
+          "item": [
+            {
+              "name": "Get All Report Reasons",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/report-reason?page=1&limit=10",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "report-reason"
+                  ],
+                  "query": [
+                    {
+                      "key": "is_active",
+                      "value": "",
+                      "description": "Filter by active status: 0=inactive, 1=active",
+                      "disabled": true
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search report reasons by reason text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page number for pagination"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Number of records per page"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Report Reason by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/report-reason/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "report-reason",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Report Reason",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"reason\": \"Inappropriate Content\", // string, min:2, max:100\r\n    \"description\": \"User reported inappropriate content that violates community guidelines.\" // string, min:2, max:1000\r\n    \r\n    // Optional fields\r\n    // is_active: Automatically set to 1 (active) if not provided\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/report-reason",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "report-reason"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Report Reason",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"reason\": \"Updated Inappropriate Content\", // string, min:2, max:100\r\n    \"description\": \"Updated description for inappropriate content report reason.\", // string, min:2, max:1000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/report-reason/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "report-reason",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Report Reason",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/report-reason/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "report-reason",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "User Report",
+          "item": [
+            {
+              "name": "Get All User Reports",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/user-report?page=1&limit=10&per_page=10",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "user-report"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "",
+                      "description": "Filter by user ID who made the report",
+                      "disabled": true
+                    },
+                    {
+                      "key": "reported_user_id",
+                      "value": "",
+                      "description": "Filter by reported user ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "status",
+                      "value": "",
+                      "description": "Filter by status: 10=PENDING, 20=SORTED, 30=BLOCKED",
+                      "disabled": true
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search reports by reason or notes",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page number for pagination"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Number of records per page"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get User Report by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/user-report/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "user-report",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create User Report",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    // user_id: Automatically set from authenticated admin user (not required in request)\r\n    \"reported_user_id\": 2, // integer, required: ID of the user being reported (must exist in users table)\r\n    \"reason\": \"Inappropriate behavior\", // string, required, min:2, max:100\r\n    \r\n    // Optional fields\r\n    \"notes\": \"User has been sending inappropriate messages and violating community guidelines.\", // string, min:2, max:1000\r\n    \"attachments\": [ // array, optional: Array of attachment objects\r\n        {\r\n            \"url\": \"https://example.com/evidence1.jpg\", // string, required for each attachment\r\n            \"type\": 30 // integer, optional: Type of attachment (audio: 10, video: 20, image: 30, document: 40)\r\n        },\r\n        {\r\n            \"url\": \"https://example.com/evidence2.jpg\",\r\n            \"type\": 30\r\n        }\r\n    ]\r\n    \r\n    // Note: status is automatically set to PENDING (10) if not provided\r\n    // Note: Attachments are created with instance_type=USER_REPORT (30) and linked to this report\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/user-report",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "user-report"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update User Report",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Optional fields - All fields are optional for update\r\n    \"reason\": \"Updated reason for report\", // string, min:2, max:100\r\n    \"notes\": \"Updated notes with more details.\", // string, min:2, max:1000\r\n    \"block_reason\": \"User has been permanently blocked due to repeated violations.\", // string, min:2, max:1000 (required if status=BLOCKED)\r\n    \"status\": 30, // integer, optional: 10=PENDING, 20=SORTED, 30=BLOCKED\r\n    \"attachments\": [ // array, optional: If provided, replaces all existing attachments\r\n        {\r\n            \"url\": \"https://example.com/new_evidence.jpg\",\r\n            \"type\": 30 // integer: audio: 10, video: 20, image: 30, document: 40\r\n        }\r\n    ]\r\n    \r\n    // Note: user_id and reported_user_id cannot be updated (automatically excluded)\r\n    // Note: When status is set to BLOCKED (30), the reported user is automatically blocked with block_reason\r\n    // Note: If attachments are provided, all existing attachments for this report are deleted and replaced\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/user-report/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "user-report",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete User Report",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/user-report/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "user-report",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Attachment",
+          "item": [
+            {
+              "name": "Get All Attachments",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/attachment",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "attachment"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "",
+                      "description": "Filter by user ID who created the attachment",
+                      "disabled": true
+                    },
+                    {
+                      "key": "type[]",
+                      "value": "30",
+                      "description": "Filter by attachment type (can specify multiple): audio: 10, video: 20, image: 30, document: 40",
+                      "disabled": true
+                    },
+                    {
+                      "key": "type[]",
+                      "value": "40",
+                      "description": "Additional attachment type filter",
+                      "disabled": true
+                    },
+                    {
+                      "key": "instance_type",
+                      "value": "",
+                      "description": "Filter by instance type: 10=USERS, 20=RELATIONSHIP, 30=USER_REPORT, 40=SUPPORT_TICKET, 50=REPORT_REASON",
+                      "disabled": true
+                    },
+                    {
+                      "key": "instance_id",
+                      "value": "",
+                      "description": "Filter by instance ID (e.g., user_id, report_id, ticket_id)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page number for pagination",
+                      "disabled": true
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Number of records per page",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Attachment by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/attachment/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "attachment",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Attachment",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Required fields\r\n    \"url\": \"https://example.com/file.pdf\", // string, required: URL of the attachment\r\n    \"user_id\": 1, // integer, required: ID of the user (must exist in users table)\r\n    \"type\": 40, // integer, required: Type of attachment (audio: 10, video: 20, image: 30, document: 40)\r\n    \"instance_type\": 30, // integer, required: Type of instance (USERS: 10, RELATIONSHIP: 20, USER_REPORT: 30, SUPPORT_TICKET: 40, REPORT_REASON: 50)\r\n    \r\n    // Optional fields\r\n    \"duration\": 120, // integer: Duration in seconds (for audio/video files)\r\n    \"thumbnail\": \"https://example.com/thumbnail.jpg\", // string: URL of the thumbnail image\r\n    \"blur_image\": \"https://example.com/blur_image.jpg\", // string: URL of the blurred image (for images)\r\n    \"instance_id\": 5 // integer: ID of the instance (e.g., user_id, report_id, ticket_id). If not provided, defaults to user_id\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/attachment",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "attachment"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Attachment",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // Optional fields - All fields are optional for update\r\n    \"url\": \"https://example.com/updated_file.pdf\", // string: Updated URL of the attachment\r\n    \"user_id\": 2, // integer: Updated user ID (must exist in users table)\r\n    \"type\": 30, // integer: Updated type (audio: 10, video: 20, image: 30, document: 40)\r\n    \"duration\": 180, // string: Updated duration in seconds\r\n    \"thumbnail\": \"https://example.com/updated_thumbnail.jpg\", // string: Updated thumbnail URL\r\n    \"blur_image\": \"https://example.com/updated_blur.jpg\", // string: Updated blurred image URL\r\n    \"instance_type\": 40, // integer: Updated instance type (USERS: 10, RELATIONSHIP: 20, USER_REPORT: 30, SUPPORT_TICKET: 40, REPORT_REASON: 50)\r\n    \"instance_id\": 10 // integer: Updated instance ID\r\n    \r\n    // Note: Most fields are protected from update (id, url, user_id, type, duration, thumbnail, blur_image, instance_type, instance_id, status, createdAt, updatedAt, deletedAt)\r\n    // This endpoint may have limited update capabilities based on exceptUpdateField configuration\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}api/admin/attachment/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "attachment",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Attachment",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}api/admin/attachment/1",
+                  "host": [
+                    "{{base_url}}api"
+                  ],
+                  "path": [
+                    "admin",
+                    "attachment",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpiSFZuSWpvaVpUZG1NVGN4TWpNdFlqYzJNUzAwTldJd0xXSmlNMkl0TkRrd1pHUTBNV1kwTldVeUlpd2lhV0YwSWpveE56STBNakUyTkRjMUxDSmxlSEFpT2pFM01qUTRNakV5TnpVc0ltbHpjeUk2SWpGbE5HRmtOR0ptTFdRMlptVXROR1JpTnkwNE4yVXhMV00zT0dJMk9ETTBZVGRoTlNJc0luTjFZaUk2SWpGbE5HRmtOR0ptTFdRMlptVXROR1JpTnkwNE4yVXhMV00zT0dJMk9ETTBZVGRoTlNJc0ltcDBhU0k2SW1VM1pqRTNNVEl6TFdJM05qRXRORFZpTUMxaVlqTmlMVFE1TUdSa05ERm1ORFZsTWlKOS5NOEg1dVJyUjJkNlphaEF4UVJvYU13SV9CSmNLQVR6cXdtN3N4cmN6U0t3",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000/",
+      "type": "string",
+      "disabled": true
+    },
+    {
+      "key": "token",
+      "value": "miyqggucnmhijwlbweoanucplvxmezcq",
+      "type": "string"
+    },
+    {
+      "key": "base_url",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "api_token",
+      "value": ""
+    }
+  ]
+}

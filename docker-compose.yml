@@ -1,0 +1,55 @@
+# Seemless stack: backend + MySQL
+# Usage: docker compose up -d   (from this directory)
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: seemless-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-seemless}
+      MYSQL_USER: ${MYSQL_USER:-seemless}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-seemlesspass}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$MYSQL_ROOT_PASSWORD\" || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: seemless-backend
+    container_name: seemless-backend
+    restart: unless-stopped
+    # .env is copied into image; override only DB_* so app uses compose MySQL
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: ${MYSQL_USER:-seemless}
+      DB_PASSWORD: ${MYSQL_PASSWORD:-seemlesspass}
+      DB_NAME: ${MYSQL_DATABASE:-seemless}
+      DIALECT: mysql
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+    volumes:
+      - backend_uploads:/usr/src/app/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+networks:
+  default:
+    name: seemless-net
+    external: true
+
+volumes:
+  mysql_data:
+  backend_uploads:

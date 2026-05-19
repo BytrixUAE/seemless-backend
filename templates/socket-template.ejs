@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket Test</title>
+</head>
+<body>
+<h1>Test Socket with Form</h1>
+
+<form id="socketForm">
+    <label for="token">Token:</label>
+    <input type="text" id="token" name="token" placeholder="Enter Token" required><br><br>
+
+    <label for="emit">Emit Event:</label>
+    <input type="text" id="emit" name="emit" placeholder="Enter Emit Event"><br><br>
+
+    <label for="listen">Listen Event:</label>
+    <input type="text" id="listen" name="listen" placeholder="Enter Listen Event"><br><br>
+
+    <label for="data">Data (JSON format):</label><br>
+    <textarea id="data" name="data" rows="4" cols="50" placeholder='{"key": "value"}'></textarea><br><br>
+
+    <button type="submit">Emit Event</button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socketForm = document.getElementById('socketForm');
+
+    socketForm.addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent form from submitting normally
+
+        // Get values from form inputs
+        const token = document.getElementById('token').value;
+        const emit = document.getElementById('emit').value || null;
+        const listen = document.getElementById('listen').value || null;
+        let data = document.getElementById('data').value || null;
+        if (data){
+            try {
+                data = JSON.parse(data);  // Parse data as JSON
+            } catch (e) {
+                alert('Invalid JSON in Data field');
+                return;
+            }
+
+        }
+        // Connect socket with authorization token
+        const socket = io(window.location.origin, {
+            query: {
+                authorization: token
+            }
+        });
+
+        // Emit the event with data
+        if (emit){
+            socket.emit(emit, data);
+        }
+
+        // Listen for the response event and display data
+        if (listen){
+            socket.on(listen, function(responseData) {
+                console.log('Data:', responseData);
+            });
+        }
+    });
+</script>
+</body>
+</html>
