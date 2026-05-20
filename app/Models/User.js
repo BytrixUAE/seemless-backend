@@ -230,16 +230,34 @@ class User extends RestModel {
             // Build relationship filter conditions
             const relationshipFilterConditions = [];
             
-            // Filter: my_friend - Both users have ACCEPTED status
+            // Filter: my_friend - Both users have ACCEPTED status (exclude blocked users)
             if (my_friend === '1') {
-                relationshipFilterConditions.push({
+                const friendCondition = {
                     user_one_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
                     user_two_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
                     [Op.or]: [
                         { user_one_id: currentUser },
                         { user_two_id: currentUser }
                     ]
-                });
+                };
+                if (blockedUserIds.length > 0) {
+                    friendCondition[Op.and] = [
+                        {
+                            [Op.or]: [
+                                { user_one_id: currentUser },
+                                { user_two_id: currentUser }
+                            ]
+                        },
+                        {
+                            [Op.or]: [
+                                { user_one_id: currentUser, user_two_id: { [Op.notIn]: blockedUserIds } },
+                                { user_two_id: currentUser, user_one_id: { [Op.notIn]: blockedUserIds } }
+                            ]
+                        }
+                    ];
+                    delete friendCondition[Op.or];
+                }
+                relationshipFilterConditions.push(friendCondition);
             }
             
             // Filter: my_requested - Current user has REQUESTED status
