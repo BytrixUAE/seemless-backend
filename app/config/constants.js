@@ -5,7 +5,16 @@ function parseFirebaseServiceAccount() {
     }
 
     try {
-        const account = JSON.parse(String(raw).trim());
+        let trimmed = String(raw).trim();
+        // Hosting panels / docker -e often pass quoted JSON literally (e.g. '{"type":...}').
+        // dotenv strips these from .env files locally; raw process.env on live may still include them.
+        if (
+            (trimmed.startsWith("'") && trimmed.endsWith("'")) ||
+            (trimmed.startsWith('"') && trimmed.endsWith('"'))
+        ) {
+            trimmed = trimmed.slice(1, -1);
+        }
+        const account = JSON.parse(trimmed);
         if (!account.client_email || !account.private_key) {
             throw new Error('service account JSON must include client_email and private_key');
         }
