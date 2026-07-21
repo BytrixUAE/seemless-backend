@@ -461,7 +461,9 @@ class User {
                 return { ...hobby, icon_url: getImageUrl(hobby.icon_url) };
             }),
             "radius_unit": record.radius_unit || 'km',
-            "stripe_customer_id": record.stripe_customer_id || null
+            "stripe_customer_id": record.stripe_customer_id || null,
+            "createdAt": record.createdAt, 
+            "updatedAt": record.updatedAt,
         }
     }
 }

@@ -120,7 +120,7 @@ class User extends RestModel {
             'id', 'uuid', 'user_type', 'firstname', 'lastname', 'name', 'username',
             'email', 'mobile_no', 'image_url', 'blured_image_url', 'is_mobile_verify', 'mobile_verifyAt', 'is_email_verify', 'email_verifyAt',
             'status', 'is_activated', 'login_type', 'platform_type', 'platform_id', 'trail_expired_at',
-            'is_blocked', 'is_special', 'block_reason', 'createdAt', 'dob', 'star_name', 'gender', 'is_visible', 'current_location', 'current_longitude', 'current_latitude', 'radius_unit', 'stripe_customer_id', 'push_notification'
+            'is_blocked', 'is_special', 'block_reason', 'createdAt', 'dob', 'star_name', 'gender', 'is_visible', 'current_location', 'current_longitude', 'current_latitude', 'radius_unit', 'stripe_customer_id', 'push_notification', 'createdAt', 'updatedAt',
         ];
     }
 
