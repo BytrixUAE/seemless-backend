@@ -32,5 +32,5 @@ RUN if [ ! -f .env ] && [ -f .env.example ]; then cp .env.example .env; fi && \
     mkdir -p uploads/user && chown -R node:node /usr/src/app/uploads
 
 USER node
-EXPOSE 3000
+EXPOSE 3003
 CMD ["node", "server.js"]

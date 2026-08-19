@@ -38,7 +38,7 @@ services:
       DB_NAME: ${MYSQL_DATABASE:-seemless}
       DIALECT: mysql
     ports:
-      - "${BACKEND_PORT:-3000}:3000"
+      - "${BACKEND_PORT:-3003}:${BACKEND_PORT:-3003}"
     volumes:
       - backend_uploads:/usr/src/app/uploads
     depends_on:

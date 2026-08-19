@@ -22,6 +22,22 @@ jobs:
           test -f Dockerfile || (echo "ERROR: Dockerfile not at root" && exit 1)
           test -f package.json || (echo "ERROR: package.json not at root" && exit 1)
 
+      # Bake the production .env into the image (Dockerfile COPYs it in; the app
+      # reads it via dotenv at runtime). .env is gitignored, so without this step
+      # the image ships with .env.example instead and is missing every real secret.
+      #
+      # The secret MUST be passed through `env:` and referenced as "$ENV_FILE" here,
+      # not interpolated as ${{ secrets.ENV_FILE }} directly into `run:` — that pastes
+      # the secret as raw script text, so bash then parses its own quotes/backslashes
+      # and corrupts SERVICE_ACCOUNT's embedded JSON/private key.
+      #
+      # NOTE: secrets end up inside the image layers -> keep abdullah211/soseemless
+      # on Docker Hub PRIVATE.
+      - name: Write .env from secret
+        env:
+          ENV_FILE: ${{ secrets.ENV_FILE }}
+        run: printf '%s\n' "$ENV_FILE" > .env
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
