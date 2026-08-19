@@ -120,7 +120,7 @@ class User extends RestModel {
             'id', 'uuid', 'user_type', 'firstname', 'lastname', 'name', 'username',
             'email', 'mobile_no', 'image_url', 'blured_image_url', 'is_mobile_verify', 'mobile_verifyAt', 'is_email_verify', 'email_verifyAt',
             'status', 'is_activated', 'login_type', 'platform_type', 'platform_id', 'trail_expired_at',
-            'is_blocked', 'is_special', 'block_reason', 'createdAt', 'dob', 'star_name', 'gender', 'is_visible', 'current_location', 'current_longitude', 'current_latitude', 'radius_unit', 'stripe_customer_id', 'push_notification'
+            'is_blocked', 'is_special', 'block_reason', 'createdAt', 'dob', 'star_name', 'gender', 'is_visible', 'current_location', 'current_longitude', 'current_latitude', 'radius_unit', 'stripe_customer_id', 'push_notification', 'createdAt', 'updatedAt',
         ];
     }
 
@@ -230,16 +230,34 @@ class User extends RestModel {
             // Build relationship filter conditions
             const relationshipFilterConditions = [];
             
-            // Filter: my_friend - Both users have ACCEPTED status
+            // Filter: my_friend - Both users have ACCEPTED status (exclude blocked users)
             if (my_friend === '1') {
-                relationshipFilterConditions.push({
+                const friendCondition = {
                     user_one_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
                     user_two_action: USER_RELATIONSHIP_ACTION_ENUM.ACCEPTED,
                     [Op.or]: [
                         { user_one_id: currentUser },
                         { user_two_id: currentUser }
                     ]
-                });
+                };
+                if (blockedUserIds.length > 0) {
+                    friendCondition[Op.and] = [
+                        {
+                            [Op.or]: [
+                                { user_one_id: currentUser },
+                                { user_two_id: currentUser }
+                            ]
+                        },
+                        {
+                            [Op.or]: [
+                                { user_one_id: currentUser, user_two_id: { [Op.notIn]: blockedUserIds } },
+                                { user_two_id: currentUser, user_one_id: { [Op.notIn]: blockedUserIds } }
+                            ]
+                        }
+                    ];
+                    delete friendCondition[Op.or];
+                }
+                relationshipFilterConditions.push(friendCondition);
             }
             
             // Filter: my_requested - Current user has REQUESTED status
