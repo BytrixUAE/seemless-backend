@@ -41,7 +41,7 @@ module.exports = {
     // S3 (used when FILE_SYSTEM=s3)
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
-    AWS_REGION: process.env.AWS_REGION || 'us-east-2',
+    AWS_REGION: process.env.AWS_S3_REGION || process.env.AWS_REGION || 'us-east-2',
     AWS_S3_BUCKET: process.env.AWS_S3_BUCKET || 'seemless-user-images',
     S3_PUBLIC_URL: process.env.S3_PUBLIC_URL,
     /** Optional: public base URL for S3 files (e.g. https://bucket.s3.region.amazonaws.com or CloudFront) */
